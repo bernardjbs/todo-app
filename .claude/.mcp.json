@@ -7,7 +7,7 @@
     "supabase": {
       "type": "stdio",
       "command": "npx",
-      "args": ["-y", "@supabase/mcp-server-supabase@latest", "--read-only"],
+      "args": ["-y", "@supabase/mcp-server-supabase@0.7.0", "--read-only"],
       "env": {
         "SUPABASE_ACCESS_TOKEN": "${SUPABASE_ACCESS_TOKEN}"
       }

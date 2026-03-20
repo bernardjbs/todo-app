@@ -16,11 +16,13 @@ Query the Supabase database for debugging and inspection purposes.
 4. **Format results** — Display results in a readable table or JSON format
 
 ## Example
+
 ```
 /db-query Show me all incomplete todos
 ```
 
 Executes:
+
 ```bash
 node -e "
   const { createClient } = require('@supabase/supabase-js');
@@ -31,6 +33,8 @@ node -e "
 ```
 
 ## Safety
-- Read-only queries only — never INSERT, UPDATE, or DELETE
-- Tool access is scoped to `Bash(npx *)` and `Bash(node *)` only
-- Always display the query before executing so the user can verify
+
+- Read-only queries only. Never INSERT, UPDATE, or DELETE.
+- Tool access is scoped to `Bash(npx *)` and `Bash(node *)` only.
+- Always display the query before executing so the user can verify.
+- Prefer using the Supabase MCP server (already configured as read-only) over direct client queries. This enforces read-only access at the infrastructure level, not just by convention.
