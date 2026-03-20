@@ -15,8 +15,11 @@ Analyze changed files, group by relevance, stage and commit each group with desc
    - **config** — Configuration files (tsconfig, package.json, vite config)
    - **docs** — Documentation and markdown files
    - **style** — Formatting-only changes
-3. **Stage and commit each group** — Create separate commits with conventional commit messages
-4. **Push** — Optionally push to remote (confirm with user first)
+3. **Show breakdown** — Present the proposed commits to the user for approval before committing:
+   - List each commit group with its message and files
+   - Wait for user confirmation before proceeding
+4. **Stage and commit each group** — Create separate commits with conventional commit messages
+5. **Push** — Optionally push to remote (confirm with user first)
 
 ## Commit Message Format
 Use conventional commits:
@@ -35,6 +38,7 @@ Use conventional commits:
 - If ANY gate remains ❌ → STOP and report what was not completed
 
 - ❌ No secrets in staged files (no `.env`, no API keys in code)
+- ❌ Breakdown shown to user and approved before committing
 - ❌ All commit messages follow conventional commit format
 - ❌ Current branch is up to date with remote
 - ❌ Each commit is atomic — related changes only
