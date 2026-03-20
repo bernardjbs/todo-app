@@ -37,10 +37,18 @@ Run the full test suite and generate a structured pass/fail report with coverage
 ```
 
 ## Verification Gates
-- [ ] All test suites discovered (check `apps/` and `packages/`)
-- [ ] Test runner executes without crashes
-- [ ] Results parsed and formatted
-- [ ] Coverage above 70% threshold (if coverage enabled)
+
+**Gate execution rules:**
+
+- Start ALL gates as ❌ (unchecked)
+- Run each gate command in order
+- Mark ✅ ONLY when the check is verified
+- If ANY gate remains ❌ → STOP and report what was not completed
+
+- ❌ All test suites discovered (check `apps/` and `packages/`)
+- ❌ Test runner executes without crashes
+- ❌ Results parsed and formatted
+- ❌ Coverage above 70% threshold (if coverage enabled)
 
 ## Usage
 ```

@@ -26,10 +26,18 @@ Use conventional commits:
 - `docs: add API design documentation`
 
 ## Verification Gates
-- [ ] No secrets in staged files (no `.env`, no API keys in code)
-- [ ] All commit messages follow conventional commit format
-- [ ] Current branch is up to date with remote
-- [ ] Each commit is atomic — related changes only
+
+**Gate execution rules:**
+
+- Start ALL gates as ❌ (unchecked)
+- Run each gate command in order
+- Mark ✅ ONLY when the check is verified
+- If ANY gate remains ❌ → STOP and report what was not completed
+
+- ❌ No secrets in staged files (no `.env`, no API keys in code)
+- ❌ All commit messages follow conventional commit format
+- ❌ Current branch is up to date with remote
+- ❌ Each commit is atomic — related changes only
 
 ## Usage
 ```
