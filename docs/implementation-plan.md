@@ -15,7 +15,7 @@ Tech stack: TypeScript, Vue 3, Vite, Tailwind CSS, Hono, Node.js, Supabase (Post
 ### Step 1.1: Git init + `.gitignore`
 
 - `git init`
-- Create `.gitignore` (node_modules, dist, .env*, .claude/settings.local.json, .claude/worktrees/, coverage/, .DS_Store)
+- Create `.gitignore` (node_modules, dist, .env\*, .claude/settings.local.json, .claude/worktrees/, coverage/, .DS_Store)
 
 ### Step 1.2: `CLAUDE.md` — Project Rules & Memory Root
 
@@ -25,36 +25,36 @@ Target: <150 lines. Concise and scannable.
 
 ### Step 1.3: Path-Specific Rules in `.claude/rules/`
 
-| File | `paths:` glob | Purpose |
-|------|---------------|---------|
-| `api-design.md` | `apps/api/**/*.ts` | Zod validation, Hono middleware, response envelope, error handling |
-| `frontend.md` | `apps/web/**/*.{ts,vue}` | Vue 3 Options API (`defineComponent()`), composables for reuse, Tailwind-only, accessibility |
-| `testing.md` | `**/*.test.ts`, `**/*.spec.ts` | describe/it blocks, mock boundaries, test naming, error case coverage |
-| `code-style.md` | *(no path filter — global)* | 2-space indent, single quotes, semicolons required, import ordering, file naming |
+| File            | `paths:` glob                  | Purpose                                                                                      |
+| --------------- | ------------------------------ | -------------------------------------------------------------------------------------------- |
+| `api-design.md` | `apps/api/**/*.ts`             | Zod validation, Hono middleware, response envelope, error handling                           |
+| `frontend.md`   | `apps/web/**/*.{ts,vue}`       | Vue 3 Options API (`defineComponent()`), composables for reuse, Tailwind-only, accessibility |
+| `testing.md`    | `**/*.test.ts`, `**/*.spec.ts` | describe/it blocks, mock boundaries, test naming, error case coverage                        |
+| `code-style.md` | _(no path filter — global)_    | 2-space indent, single quotes, semicolons required, import ordering, file naming             |
 
 ### Step 1.4: Custom Skills in `.claude/skills/`
 
-| Skill | Key config | Purpose |
-|-------|------------|---------|
-| **deploy** | `disable-model-invocation: true`, `context: fork` | Pre-flight checks → Docker build → push to registry → verify health |
-| **review** | `context: fork` | Git diff → check against rules → report CRITICAL/WARNING/SUGGESTION |
-| **db-query** | `allowed-tools: Bash(npx *), Bash(node *)` | Query Supabase for debugging/inspection |
-| **workflow** | `disable-model-invocation: true` | Orchestrator: plan → issue → branch → implement → test → review → commit → PR |
-| **test-report** | `context: fork` | Run full test suite, generate structured pass/fail report with coverage |
-| **smart-commit** | `disable-model-invocation: true` | Group changed files by type, create separate descriptive commits |
-| **branch** | `disable-model-invocation: true` | Create feature branch from issue, open draft PR via GitHub MCP |
-| **build-skill** | `disable-model-invocation: true` | Meta-skill: scaffold new skills with verification gate checklists |
-| **wrap-up** | `disable-model-invocation: true` | Session continuity: capture state, update memory, write handoff doc |
+| Skill            | Key config                                        | Purpose                                                                       |
+| ---------------- | ------------------------------------------------- | ----------------------------------------------------------------------------- |
+| **deploy**       | `disable-model-invocation: true`, `context: fork` | Pre-flight checks → Docker build → push to registry → verify health           |
+| **review**       | `context: fork`                                   | Git diff → check against rules → report CRITICAL/WARNING/SUGGESTION           |
+| **db-query**     | `allowed-tools: Bash(npx *), Bash(node *)`        | Query Supabase for debugging/inspection                                       |
+| **workflow**     | `disable-model-invocation: true`                  | Orchestrator: plan → issue → branch → implement → test → review → commit → PR |
+| **test-report**  | `context: fork`                                   | Run full test suite, generate structured pass/fail report with coverage       |
+| **smart-commit** | `disable-model-invocation: true`                  | Group changed files by type, create separate descriptive commits              |
+| **branch**       | `disable-model-invocation: true`                  | Create feature branch from issue, open draft PR via GitHub MCP                |
+| **build-skill**  | `disable-model-invocation: true`                  | Meta-skill: scaffold new skills with verification gate checklists             |
+| **wrap-up**      | `disable-model-invocation: true`                  | Session continuity: capture state, update memory, write handoff doc           |
 
 ### Step 1.5: Hooks in `.claude/settings.json`
 
-| Event | Matcher | Hook script | Behavior |
-|-------|---------|-------------|----------|
-| `PreToolUse` | `Edit\|Write` | `protect-files.sh` | Blocks writes to `.env*` files |
-| `PostToolUse` | `Edit\|Write` | `auto-format.sh` | Runs Prettier on changed files |
-| `Stop` | *(none)* | `verify-tests.sh` | Runs `npm test` — fix before stopping |
-| `PreCompact` | *(none)* | `context-backup.mjs` | Extracts key context, writes backup before compaction |
-| *(StatusLine)* | *(always)* | `context-statusline.mjs` | Displays token usage + context remaining % |
+| Event          | Matcher       | Hook script              | Behavior                                              |
+| -------------- | ------------- | ------------------------ | ----------------------------------------------------- |
+| `PreToolUse`   | `Edit\|Write` | `protect-files.sh`       | Blocks writes to `.env*` files                        |
+| `PostToolUse`  | `Edit\|Write` | `auto-format.sh`         | Runs Prettier on changed files                        |
+| `Stop`         | _(none)_      | `verify-tests.sh`        | Runs `npm test` — fix before stopping                 |
+| `PreCompact`   | _(none)_      | `context-backup.mjs`     | Extracts key context, writes backup before compaction |
+| _(StatusLine)_ | _(always)_    | `context-statusline.mjs` | Displays token usage + context remaining %            |
 
 ### Step 1.6: MCP Servers
 
@@ -62,13 +62,13 @@ GitHub MCP (HTTP) and Supabase MCP (stdio, read-only) configured in `.claude/.mc
 
 ### Step 1.7: Custom Agents in `.claude/agents/`
 
-| Agent | Model | Rationale |
-|-------|-------|-----------|
-| **planner** | `opus` | Complex reasoning, worktree isolation, read-only |
-| **code-reviewer** | `sonnet` | Balanced analysis for detailed review |
-| **researcher** | `haiku` | Speed-optimized for search tasks |
-| **security-reviewer** | `sonnet` | OWASP scanning, security patterns |
-| **formatter** | `haiku` | Mechanical lint/format tasks |
+| Agent                 | Model    | Rationale                                        |
+| --------------------- | -------- | ------------------------------------------------ |
+| **planner**           | `opus`   | Complex reasoning, worktree isolation, read-only |
+| **code-reviewer**     | `sonnet` | Balanced analysis for detailed review            |
+| **researcher**        | `haiku`  | Speed-optimized for search tasks                 |
+| **security-reviewer** | `sonnet` | OWASP scanning, security patterns                |
+| **formatter**         | `haiku`  | Mechanical lint/format tasks                     |
 
 ### Step 1.9: Development Workflow Orchestrator (`/workflow`)
 
@@ -110,33 +110,39 @@ todo-app/
 ## Phase 3: Implementation — Application Code
 
 ### Step 3.1: Shared types (`packages/shared/`)
+
 - `Todo`, `CreateTodoInput`, `UpdateTodoInput` interfaces
 - `ApiResponse<T>` envelope type
 - `TodoFilters` type
 
 ### Step 3.2: Database migration
+
 - `todos` table with UUID PK, title, description, completed, timestamps
 - `update_updated_at()` trigger
 - RLS enabled with permissive policy
 
 ### Step 3.3: Backend API (`apps/api/`)
+
 - Hono app with CORS, logger, health endpoint, error handler
 - Supabase client singleton
 - Full CRUD routes with Zod validation
 - Unit tests mocking Supabase
 
 ### Step 3.4: Frontend (`apps/web/`)
+
 - Vue 3 with Options API (`defineComponent()`)
 - Composables for shared logic, Options API for components
 - Components: TodoForm, TodoList, TodoItem, TodoPage
 - Component tests with @vue/test-utils
 
 ### Step 3.5: Docker
+
 - Multi-stage Dockerfiles for API and Web
 - nginx config for SPA routing
 - docker-compose.yml
 
 ### Step 3.6: CI/CD
+
 - GitHub Actions: lint → test → build → docker push
 - Node.js 22, push to ghcr.io
 
@@ -147,6 +153,7 @@ todo-app/
 ## Phase 4: Documentation
 
 ### Journey Summaries (`docs/summaries/`)
+
 - `001_summary_claude-code-configuration.md`
 - `002_summary_model-tiering-strategy.md`
 - `003_summary_worktree-workflow.md`
@@ -154,9 +161,11 @@ todo-app/
 - `005_summary_integration-ecosystem.md`
 
 ### `docs/MY_SUPABASE_DOC.md`
+
 Tutorial-style Supabase learning journal covering setup, schema, RLS, CRUD, filtering, error handling, MCP integration, migrations, and troubleshooting.
 
 ### `README.md`
+
 Project overview, quick start, architecture, Claude Code features demonstrated.
 
 ---
