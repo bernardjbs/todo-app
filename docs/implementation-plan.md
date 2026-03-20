@@ -19,7 +19,7 @@ Tech stack: TypeScript, Vue 3, Vite, Tailwind CSS, Hono, Node.js, Supabase (Post
 
 ### Step 1.2: `CLAUDE.md` — Project Rules & Memory Root
 
-Project overview, tech stack, monorepo structure, build/test/lint commands, coding standards (strict TS, Zod validation, Vue 3 Composition API, Tailwind-only styling), API design conventions (REST, response envelope `{ data, error, meta }`), git conventions (conventional commits), worktree workflow notes, memory system notes.
+Project overview, tech stack, monorepo structure, build/test/lint commands, coding standards (strict TS, Zod validation, Vue 3 Options API, Tailwind-only styling), API design conventions (REST, response envelope `{ data, error, meta }`), git conventions (conventional commits), worktree workflow notes, memory system notes.
 
 Target: <150 lines. Concise and scannable.
 
@@ -28,9 +28,9 @@ Target: <150 lines. Concise and scannable.
 | File | `paths:` glob | Purpose |
 |------|---------------|---------|
 | `api-design.md` | `apps/api/**/*.ts` | Zod validation, Hono middleware, response envelope, error handling |
-| `frontend.md` | `apps/web/**/*.{ts,vue}` | Vue 3 Composition API (`<script setup>`), composables for reuse, Tailwind-only, accessibility |
+| `frontend.md` | `apps/web/**/*.{ts,vue}` | Vue 3 Options API (`defineComponent()`), composables for reuse, Tailwind-only, accessibility |
 | `testing.md` | `**/*.test.ts`, `**/*.spec.ts` | describe/it blocks, mock boundaries, test naming, error case coverage |
-| `code-style.md` | *(no path filter — global)* | 2-space indent, single quotes, no semicolons, import ordering, file naming |
+| `code-style.md` | *(no path filter — global)* | 2-space indent, single quotes, semicolons required, import ordering, file naming |
 
 ### Step 1.4: Custom Skills in `.claude/skills/`
 
@@ -126,8 +126,8 @@ todo-app/
 - Unit tests mocking Supabase
 
 ### Step 3.4: Frontend (`apps/web/`)
-- Vue 3 with Composition API
-- Composables for todo CRUD operations
+- Vue 3 with Options API (`defineComponent()`)
+- Composables for shared logic, Options API for components
 - Components: TodoForm, TodoList, TodoItem, TodoPage
 - Component tests with @vue/test-utils
 
@@ -147,11 +147,11 @@ todo-app/
 ## Phase 4: Documentation
 
 ### Journey Summaries (`docs/summaries/`)
-1. Claude Code Configuration
-2. Model Tiering Strategy
-3. Worktree Workflow
-4. Memory Architecture
-5. Integration Ecosystem
+- `001_summary_claude-code-configuration.md`
+- `002_summary_model-tiering-strategy.md`
+- `003_summary_worktree-workflow.md`
+- `004_summary_memory-architecture.md`
+- `005_summary_integration-ecosystem.md`
 
 ### `docs/MY_SUPABASE_DOC.md`
 Tutorial-style Supabase learning journal covering setup, schema, RLS, CRUD, filtering, error handling, MCP integration, migrations, and troubleshooting.
