@@ -5,7 +5,7 @@ export interface ApiResponse<T> {
 }
 
 export interface Todo {
-  id: string;
+  uuid: string;
   title: string;
   description: string | null;
   completed: boolean;
@@ -22,4 +22,9 @@ export interface UpdateTodoInput {
   title?: string;
   description?: string | null;
   completed?: boolean;
+}
+
+export interface TodoFilters {
+  completed?: boolean;
+  search?: string;
 }
