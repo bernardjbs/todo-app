@@ -26,5 +26,8 @@ coverage/
 .vscode/
 .idea/
 
+# Journey summaries (personal notes, not project docs)
+docs/summaries/
+
 # Docker
 docker-compose.override.yml
