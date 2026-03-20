@@ -4,13 +4,16 @@ export interface ApiResponse<T> {
   meta?: { count?: number };
 }
 
+/** ISO 8601 date string (e.g. "2026-03-21T12:00:00.000Z") */
+export type ISODateString = string;
+
 export interface Todo {
-  id: string;
+  uuid: string;
   title: string;
   description: string | null;
   completed: boolean;
-  created_at: string;
-  updated_at: string;
+  created_at: ISODateString;
+  updated_at: ISODateString;
 }
 
 export interface CreateTodoInput {
@@ -22,4 +25,10 @@ export interface UpdateTodoInput {
   title?: string;
   description?: string | null;
   completed?: boolean;
+}
+
+export interface TodoFilters {
+  completed?: boolean;
+  /** Matches against todo title (case-insensitive) */
+  search?: string;
 }

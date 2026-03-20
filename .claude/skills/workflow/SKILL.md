@@ -54,14 +54,20 @@ Mark the draft PR as ready for review via GitHub MCP.
 
 ## Verification Gates
 
-Each step must confirm success before proceeding to the next:
+**Gate execution rules:**
 
-- [ ] Plan produced and approved by user
-- [ ] GitHub issue created with link
-- [ ] Branch created and draft PR opened
-- [ ] Implementation complete, verified against plan
-- [ ] All tests pass with coverage report
-- [ ] Security review shows no CRITICAL findings
-- [ ] Code review shows no CRITICAL findings
-- [ ] All changes committed and pushed
-- [ ] PR marked as ready for review
+- Start ALL gates as ❌ (unchecked)
+- Execute each gate in order — do NOT skip or combine steps
+- Mark ✅ ONLY when the step is verified complete
+- If ANY gate remains ❌ → STOP and report what was not completed
+- Confirm with the user before proceeding to each new step
+
+- ❌ Plan produced and approved by user
+- ❌ GitHub issue created with link
+- ❌ Branch created and draft PR opened
+- ❌ Implementation complete, verified against plan
+- ❌ All tests pass with coverage report
+- ❌ Security review shows no CRITICAL findings
+- ❌ Code review shows no CRITICAL findings
+- ❌ All changes committed and pushed
+- ❌ PR marked as ready for review

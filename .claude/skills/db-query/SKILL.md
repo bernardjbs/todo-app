@@ -38,3 +38,17 @@ node -e "
 - Tool access is scoped to `Bash(npx *)` and `Bash(node *)` only.
 - Always display the query before executing so the user can verify.
 - Prefer using the Supabase MCP server (already configured as read-only) over direct client queries. This enforces read-only access at the infrastructure level, not just by convention.
+
+## Verification Gates
+
+**Gate execution rules:**
+
+- Start ALL gates as ❌ (unchecked)
+- Run each gate command in order
+- Mark ✅ ONLY when the check is verified
+- If ANY gate remains ❌ → STOP and report what was not completed
+
+- ❌ Query is read-only (SELECT only, no INSERT/UPDATE/DELETE)
+- ❌ Query displayed to user before execution
+- ❌ Supabase environment variables are available
+- ❌ Results formatted and displayed

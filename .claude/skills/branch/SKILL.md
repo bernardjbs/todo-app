@@ -20,11 +20,19 @@ Create a feature branch from an issue number or name, and open a draft PR via Gi
 - Slug derived from issue title or user input, lowercase, hyphenated
 
 ## Verification Gates
-- [ ] Main branch is up to date with remote
-- [ ] Issue exists (if issue number provided)
-- [ ] Branch name follows convention (`feature/*` or `fix/*`)
-- [ ] Branch created and pushed successfully
-- [ ] Draft PR created and linked to issue
+
+**Gate execution rules:**
+
+- Start ALL gates as ❌ (unchecked)
+- Run each gate command in order
+- Mark ✅ ONLY when the check is verified
+- If ANY gate remains ❌ → STOP and report what was not completed
+
+- ❌ Main branch is up to date with remote
+- ❌ Issue exists (if issue number provided)
+- ❌ Branch name follows convention (`feature/*` or `fix/*`)
+- ❌ Branch created and pushed successfully
+- ❌ Draft PR created and linked to issue
 
 ## Usage
 ```
