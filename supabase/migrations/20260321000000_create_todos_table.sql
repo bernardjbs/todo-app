@@ -24,6 +24,7 @@ CREATE TRIGGER todos_updated_at
   EXECUTE FUNCTION update_updated_at();
 
 -- Enable Row Level Security with permissive policy (no auth)
+-- FIXME: Replace with user-scoped policies when auth is added
 ALTER TABLE todos ENABLE ROW LEVEL SECURITY;
 
 CREATE POLICY "Allow all operations on todos"
