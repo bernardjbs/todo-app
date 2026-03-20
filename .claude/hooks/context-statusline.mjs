@@ -28,11 +28,11 @@ try {
       process.exit(0);
     }
 
-    // Extract token info from session
-    const tokensUsed = session.token_usage?.total || session.tokensUsed || 0;
-    const contextLimit = session.context_limit || session.contextLimit || 200000;
-    const remaining = contextLimit - tokensUsed;
-    const pct = Math.round((remaining / contextLimit) * 100);
+    // Extract token info from session (Claude Code sends context_window object)
+    const ctx = session.context_window || {};
+    const tokensUsed = ctx.total_input_tokens || 0;
+    const contextLimit = ctx.context_window_size || 200000;
+    const pct = ctx.remaining_percentage ?? Math.round(((contextLimit - tokensUsed) / contextLimit) * 100);
 
     // Check backup status
     const backupDir = join(process.cwd(), '.claude', 'backups');
@@ -51,7 +51,7 @@ try {
 
     // Output status line
     const parts = [
-      `ctx: ${pct}%`,
+      `ctx remaining: ${pct}%`,
       `tokens: ${formatTokens(tokensUsed)}/${formatTokens(contextLimit)}`,
       `backups: ${backupCount}`,
     ];
