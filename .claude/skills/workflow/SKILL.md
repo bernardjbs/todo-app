@@ -40,9 +40,13 @@ Invoke `/test-report` skill: run `npm test`, generate pass/fail report with cove
 
 Invoke `security-reviewer` agent (sonnet): scan for OWASP vulnerabilities, exposed secrets, injection risks, exposed database IDs.
 
+If findings require fixes, apply them, re-run tests (step 5), then **re-review**. Each re-review pass may uncover edge cases in the fixes themselves. Continue the fix → re-run tests → re-review loop until a clean pass with no new WARNING or CRITICAL findings. The final pass must always be a verification-only review confirming everything is clean.
+
 ### 7. Code Review
 
 Invoke `code-reviewer` agent (sonnet): review quality, adherence to rules, check for breaking changes.
+
+If findings require fixes, apply them, re-run tests (step 5), then **re-review**. Continue the fix → re-run tests → re-review loop until a clean pass with no new WARNING or CRITICAL findings. The final pass must always be a verification-only review confirming everything is clean.
 
 ### 8. Commit & Push
 
