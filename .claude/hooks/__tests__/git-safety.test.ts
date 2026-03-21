@@ -5,9 +5,10 @@ import { join } from 'path';
 const hookPath = join(__dirname, '..', 'git-safety.sh');
 
 function runHook(command: string): { stdout: string; exitCode: number } {
-  const input = JSON.stringify({ command });
+  const stdin = JSON.stringify({ command });
   try {
-    const stdout = execSync(`echo '${input}' | bash ${hookPath}`, {
+    const stdout = execSync(`bash ${hookPath}`, {
+      input: stdin,
       encoding: 'utf8',
       env: { ...process.env, PATH: process.env.PATH },
     });
@@ -20,7 +21,10 @@ function runHook(command: string): { stdout: string; exitCode: number } {
 
 describe('git-safety hook', () => {
   describe('commit to main protection', () => {
-    it('blocks git commit on main branch', () => {
+    const branch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
+    const onMain = branch === 'main' || branch === 'master';
+
+    it.skipIf(!onMain)('blocks git commit on main branch', () => {
       const result = runHook('git commit -m "test"');
 
       expect(result.exitCode).toBe(2);
@@ -28,23 +32,16 @@ describe('git-safety hook', () => {
       expect(result.stdout).toContain('Cannot commit directly to');
     });
 
-    it('blocks git commit with flags before commit keyword', () => {
+    it.skipIf(!onMain)('blocks git commit with flags before commit keyword', () => {
       const result = runHook('git -c user.name=test commit -m "test"');
 
       expect(result.exitCode).toBe(2);
       expect(result.stdout).toContain('BLOCKED');
     });
 
-    it('allows git commit on feature branch', () => {
-      // This test only works if we're not on main — skip if we are
-      const branch = execSync('git branch --show-current', { encoding: 'utf8' }).trim();
-      if (branch === 'main' || branch === 'master') {
-        // We're on main, so the hook will block — this is expected
-        const result = runHook('git commit -m "test"');
-        expect(result.exitCode).toBe(2);
-        return;
-      }
+    it.skipIf(onMain)('allows git commit on feature branch', () => {
       const result = runHook('git commit -m "test"');
+
       expect(result.exitCode).toBe(0);
     });
   });
@@ -72,6 +69,13 @@ describe('git-safety hook', () => {
       expect(result.stdout).toContain('BLOCKED');
     });
 
+    it('blocks git push -f mid-command', () => {
+      const result = runHook('git push -f origin feature/test');
+
+      expect(result.exitCode).toBe(2);
+      expect(result.stdout).toContain('BLOCKED');
+    });
+
     it('allows normal git push', () => {
       const result = runHook('git push origin feature/test');
 
@@ -90,6 +94,13 @@ describe('git-safety hook', () => {
 
     it('blocks staging .env.local', () => {
       const result = runHook('git add .env.local');
+
+      expect(result.exitCode).toBe(2);
+      expect(result.stdout).toContain('BLOCKED');
+    });
+
+    it('blocks staging .env in subdirectory', () => {
+      const result = runHook('git add config/.env');
 
       expect(result.exitCode).toBe(2);
       expect(result.stdout).toContain('BLOCKED');
