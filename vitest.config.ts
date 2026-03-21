@@ -10,6 +10,12 @@ export default defineConfig({
           include: ['apps/api/src/**/*.test.ts'],
         },
       },
+      {
+        test: {
+          name: 'hooks',
+          include: ['.claude/hooks/__tests__/*.test.ts'],
+        },
+      },
       'apps/web/vitest.config.ts',
     ],
   },

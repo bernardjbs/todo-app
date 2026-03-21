@@ -46,11 +46,11 @@ fi
 
 # Block staging .env files (explicit filename or wildcard staging)
 if echo "$command" | grep -qE '\bgit\b.*\badd\b'; then
-  if echo "$command" | grep -qE '\.env(\s|$|\.)'; then
+  if echo "$command" | grep -qE '\.env(\s|$|\.)' && ! echo "$command" | grep -qE '\.env\.example'; then
     echo "BLOCKED: Cannot stage .env files. They contain secrets and must not be committed."
     exit 2
   fi
-  if echo "$command" | grep -qE 'git add \.|git add -A|git add --all'; then
+  if echo "$command" | grep -qE 'git add \.(\s|$)|git add -A|git add --all'; then
     echo "BLOCKED: Broad staging commands are not allowed. Stage specific files instead."
     echo "Use: git add <file1> <file2> ..."
     exit 2
