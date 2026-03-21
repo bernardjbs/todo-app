@@ -90,7 +90,8 @@ try {
         `backups: ${backupCount}`,
       ].join(' | ');
 
-      const line2 = `branch: ${branch}${issueNum ? ` (${issueNum})` : ''}`;
+      const branchColour = '\x1b[38;5;214m';
+      const line2 = `${branchColour}BRANCH${reset} ${branch}`;
 
       console.log(line1 + warning + '\n' + line2);
     } catch {
